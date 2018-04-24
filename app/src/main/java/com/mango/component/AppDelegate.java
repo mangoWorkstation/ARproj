@@ -29,7 +29,7 @@ public class AppDelegate extends Application {
             }
         });
 
-        PushServiceFactory.getCloudPushService().setPushIntentService(MyMessageIntentService.class);
+        PushServiceFactory.getCloudPushService().setPushIntentService(AliyunMsgServiceCenter.class);
 
 
     }

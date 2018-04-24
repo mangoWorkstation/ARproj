@@ -18,8 +18,8 @@ import java.util.Map;
  * 详细用户可参考:https://help.aliyun.com/document_detail/30066.html#h2-2-messagereceiver-aliyunmessageintentservice
  */
 
-public class MyMessageIntentService extends AliyunMessageIntentService {
-    private static final String REC_TAG = "MyMessageIntentService";
+public class AliyunMsgServiceCenter extends AliyunMessageIntentService {
+    private static final String REC_TAG = "AliyunMsgServiceCenter";
 
     /**
      * 推送通知的回调方法
