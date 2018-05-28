@@ -42,4 +42,11 @@ dependencies {
 
     //Aliyun推送
     compile 'com.aliyun.ams:alicloud-android-push:3.1.2'
+
+    //3D地图so及jar
+    compile 'com.amap.api:3dmap:latest.integration'
+    //定位功能
+    compile 'com.amap.api:location:latest.integration'
+    //搜索功能
+    compile 'com.amap.api:search:latest.integration'
 }

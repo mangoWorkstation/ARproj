@@ -9,22 +9,29 @@ import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 
 public class AppDelegate extends Application {
-    private static final String TAG = "Init";
+    private static final String TAG = "AppDelegate";
+    private final CloudPushService pushService;
+
+    public AppDelegate() {
+        pushService = PushServiceFactory.getCloudPushService();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         initCloudChannel(this);
-        final String account = "228769e811394682ac8c8dda21490ef3";
+
+        //获取deviceID，将其在绑定为阿里云推送中心和云端的推送ID
+        final String deviceID = pushService.getDeviceId();
 
         //推送绑定阿里云设备id
-        PushServiceFactory.getCloudPushService().bindAccount(account, new CommonCallback()
-        {
+        PushServiceFactory.getCloudPushService().bindAccount(deviceID, new CommonCallback() {
             @Override public void onSuccess(String s){
-                Log.d("bindResult","阿里推送绑定成功 "+s+ " ");
+                Log.d(TAG,"阿里推送绑定成功,推送id为："+deviceID+ " ");
             }
 
             @Override public void onFailed(String s, String s1){
-                Log.d("bindResult","阿里推送绑定失败 "+s+ " ");
+                Log.d(TAG,"阿里推送绑定失败 "+deviceID+ " ");
 
             }
         });
