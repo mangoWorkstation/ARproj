@@ -23,11 +23,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
     }
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
@@ -39,14 +47,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //okhttp
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
-
     //Aliyun推送
     compile 'com.aliyun.ams:alicloud-android-push:3.1.2'
-
     //3D地图so及jar
     compile 'com.amap.api:3dmap:latest.integration'
     //定位功能
     compile 'com.amap.api:location:latest.integration'
     //搜索功能
     compile 'com.amap.api:search:latest.integration'
+
+    //AR Vuforia
+    compile files('libs/Vuforia.jar')
 }
