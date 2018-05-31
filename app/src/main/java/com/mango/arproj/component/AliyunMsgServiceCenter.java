@@ -1,4 +1,4 @@
-package com.mango.component;
+package com.mango.arproj.component;
 
 import android.content.Context;
 import android.util.Log;

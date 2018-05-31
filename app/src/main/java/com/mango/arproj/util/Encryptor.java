@@ -1,4 +1,4 @@
-package com.mango.util;
+package com.mango.arproj.util;
 
 /**
  * Created by mangguojun on 2018/4/22.
@@ -33,7 +33,7 @@ public class Encryptor {
     /**
      * 传入文本内容，返回 加盐加密后的SHA-512 串
      *
-     * @param strText 明文
+     * @param str 明文
      * @param salt 盐
      * @return
      */
@@ -44,7 +44,7 @@ public class Encryptor {
     /**
      * 字符串 SHA 加密
      *
-     * @param strSourceText
+     * @param strText
      * @return
      */
     private String SHA(final String strText, final String strType) {

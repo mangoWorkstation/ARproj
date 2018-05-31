@@ -1,4 +1,4 @@
-package com.mango.component;
+package com.mango.arproj.component;
 
 import android.app.Application;
 import android.content.Context;

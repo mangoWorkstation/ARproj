@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mango.arproj.MainActivity">
+    tools:context="com.mango.arproj.activity.MainActivity">
 
     <com.amap.api.maps.MapView
 
@@ -12,6 +12,11 @@
 
         android:layout_width="match_parent"
 
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+
+        android:layout_marginBottom="100dp">
+
+
+    </com.amap.api.maps.MapView>
 
 </android.support.constraint.ConstraintLayout>

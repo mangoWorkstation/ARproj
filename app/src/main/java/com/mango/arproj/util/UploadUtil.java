@@ -1,4 +1,4 @@
-package com.mango.util;
+package com.mango.arproj.util;
 
 import android.util.Log;
 

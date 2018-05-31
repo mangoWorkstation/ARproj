@@ -56,6 +56,10 @@ dependencies {
     //搜索功能
     compile 'com.amap.api:search:latest.integration'
 
+
+    //炸裂菜单
+    compile 'com.nightonke:boommenu:2.1.1'
+
     //AR Vuforia
     compile files('libs/Vuforia.jar')
 }
