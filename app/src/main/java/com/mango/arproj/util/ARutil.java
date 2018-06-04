@@ -4,12 +4,17 @@ package com.mango.arproj.util;
  * Created by mangguojun on 2018/5/30.
  */
 
-public class ARurl {
+public class ARutil {
 
     /**
      * 网络请求基地址
      */
     private static String baseurl = "http://120.78.177.77/ar/api/";
+
+    /**
+     * 校验手机号的正则表达式
+     */
+    private static String telRex = "^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$";
 
     /**
      * 获取用户接口URL
@@ -57,5 +62,12 @@ public class ARurl {
      */
     public static String getARPackURL(){
         return baseurl+"arpack";
+    }
+
+    /**
+     * 获取校验手机号的正则表达式
+     */
+    public static String getTelRex(){
+        return telRex;
     }
 }

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.mango.arproj"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -30,11 +30,6 @@ android {
         }
     }
 
-//    externalNativeBuild {
-//        cmake {
-//            path "CMakeLists.txt"
-//        }
-//    }
     buildToolsVersion '27.0.3'
 }
 
@@ -47,19 +42,23 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //okhttp
-    compile 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     //Aliyun推送
-    compile 'com.aliyun.ams:alicloud-android-push:3.1.2'
+    implementation 'com.aliyun.ams:alicloud-android-push:3.1.2'
     //3D地图so及jar
-    compile 'com.amap.api:3dmap:latest.integration'
+    implementation 'com.amap.api:3dmap:latest.integration'
     //定位功能
-    compile 'com.amap.api:location:latest.integration'
+    implementation 'com.amap.api:location:latest.integration'
     //搜索功能
-    compile 'com.amap.api:search:latest.integration'
+    implementation 'com.amap.api:search:latest.integration'
 
     //炸裂菜单
-    compile 'com.nightonke:boommenu:2.1.1'
+    implementation 'com.nightonke:boommenu:2.1.1'
 
     //AR Vuforia
-    compile files('libs/Vuforia.jar')
+    implementation files('libs/Vuforia.jar')
+
+    //submit
+    implementation 'me.spark:submitbutton:1.0.1'
+
 }

@@ -3,6 +3,9 @@ package com.mango.arproj.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -22,7 +25,7 @@ import android.widget.Toast;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.mango.arproj.R;
-import com.mango.arproj.util.ARurl;
+import com.mango.arproj.util.ARutil;
 import com.mango.arproj.util.Encryptor;
 import com.mango.arproj.util.JSONDecodeFormatter;
 import com.mango.arproj.util.JSONEncodeFormatter;
@@ -45,7 +48,6 @@ public class LoginActivity extends AppCompatActivity{
     private View mProgressView;
     private View mLoginFormView;
 
-    private String rex = "^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +67,20 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
-        Button loginButton = (Button) findViewById(R.id.btn_login_login);
+        Button loginButton = findViewById(R.id.btn_login_login);
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+        Button registerBtn = findViewById(R.id.btn_login_register);
+        registerBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
             }
         });
 
@@ -100,7 +111,7 @@ public class LoginActivity extends AppCompatActivity{
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            passwordView.setError("无效的密码");
+            passwordView.setError("密码不可为空");
             focusView = passwordView;
             cancel = true;
         }
@@ -129,13 +140,11 @@ public class LoginActivity extends AppCompatActivity{
                 @Override
                 public void run() {
 
-                    //添加data字段，分别装入token和pushID两个值
                     HashMap<String, String> data = new HashMap<>();
                     data.put("tel",phone);
                     data.put("pushID", PushServiceFactory.getCloudPushService().getDeviceId());
                     data.put("SHAPwd",new Encryptor().SHA512(password));
 
-                    //将消息和状态码10006装入JSON格式化器中，返回处理后的JSON字符串
                     String postBody = JSONEncodeFormatter.parser(10005, data);
 
 
@@ -145,7 +154,7 @@ public class LoginActivity extends AppCompatActivity{
                     OkHttpClient client = new OkHttpClient();
                     Request request = new Request.Builder()
                             //设置请求URL
-                            .url(ARurl.getLoginURL())
+                            .url(ARutil.getLoginURL())
                             //装入处理后的字符串，使用post方式
                             .post(RequestBody.create(
                                     MediaType.parse("application/json; charset=utf-8"),
@@ -158,16 +167,40 @@ public class LoginActivity extends AppCompatActivity{
                         response = client.newCall(request).execute();
                         //获取response中的字符
                         final String re = response.body().string();
+                        HashMap<String,Object> msg = JSONDecodeFormatter.decodeDataObject(re);
+                        String code = (String) msg.get("code");
+                        if("0".compareTo(code)==0){
+
+                            HashMap<String,String> data_obj = (HashMap<String, String>) msg.get("data");
+                            String uuid = data_obj.get("uuid");
+                            String token = data_obj.get("token");
+
+                            SharedPreferences.Editor editor = getSharedPreferences("userData",MODE_PRIVATE).edit();
+                            editor.putString("uuid",uuid);
+                            editor.putString("token",token);
+
+                            LoginActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            });
+                        }
+                        else{
+
+                            LoginActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //使用json格式化解码器处理短回复
+                                    showProgress(false);
+                                    Toast.makeText(LoginActivity.this,"手机号或密码错误",Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
                         //在主线程上更新本活动UI，不可在主线程上直接更新，将会造成闪退
-                        LoginActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //使用json格式化解码器处理短回复
-                                HashMap<String, String> simpleMsg = JSONDecodeFormatter.decodeSimpleMsg(re);
-                                String str = "code:" + simpleMsg.get("code") + "\ntimestamps:" + simpleMsg.get("timestamp") + "\ndata:" + simpleMsg.get("data").toString();
-                                Toast.makeText(LoginActivity.this, str, Toast.LENGTH_LONG).show();
-                            }
-                        });
+
                         Log.d("res", re);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -179,12 +212,11 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     private boolean isPhoneValid(String phone) {
-        return phone.matches(rex);
+        return phone.matches(ARutil.getTelRex());
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return (password!=null?true:false);
     }
 
     /**

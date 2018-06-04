@@ -83,7 +83,16 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="@string/title_activity_register" />
+        <activity
+            android:name=".activity.ForcePresetPasswordActivity"
+            android:label="@string/title_activity_force_preset_password" />
+        <activity
+            android:name=".activity.UserProfileImplementationActivity"
+            android:label="@string/title_activity_user_profile_preset"/>
     </application>
 
 </manifest>
