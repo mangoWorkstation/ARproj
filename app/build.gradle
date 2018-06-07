@@ -61,4 +61,13 @@ dependencies {
     //submit
     implementation 'me.spark:submitbutton:1.0.1'
 
+    //Hive layout
+    implementation 'com.github.chacojack:hivelayoutmanager:1.0.3'
+
+    //drawer menu
+    implementation 'com.rom4ek:arcnavigationview:1.0.3'
+
+    implementation 'com.heinrichreimersoftware:material-drawer:2.3.3'
+
+
 }

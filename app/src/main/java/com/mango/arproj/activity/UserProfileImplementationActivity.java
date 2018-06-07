@@ -50,6 +50,8 @@ public class UserProfileImplementationActivity extends AppCompatActivity {
 
     private String TAG = ClazzTransformer.getClazzTAG(this);
 
+    private boolean isAfterRegister;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,8 @@ public class UserProfileImplementationActivity extends AppCompatActivity {
 
 
         token = getIntent().getStringExtra("token");
+        isAfterRegister = String.valueOf(getIntent().getStringExtra("isAfterRegister")).compareTo("1")==0?true:false;
+
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -199,16 +203,19 @@ public class UserProfileImplementationActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(UserProfileImplementationActivity.this);
-        dialog.setTitle("宝宝快回来");
-        dialog.setMessage("就差一步就完成了！");
-        dialog.setCancelable(false);
-        dialog.setPositiveButton("好哒", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        dialog.show();
+        if(isAfterRegister) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(UserProfileImplementationActivity.this);
+            dialog.setTitle("宝宝快回来");
+            dialog.setMessage("就差一步就完成了！");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("好哒", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            dialog.show();
+        }
     }
 }

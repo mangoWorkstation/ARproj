@@ -70,4 +70,11 @@ public class ARutil {
     public static String getTelRex(){
         return telRex;
     }
+
+    /**
+     * 获取sharePreference存储wenjianming
+     */
+    public static String getSharePreferencePath(){
+        return "userData";
+    }
 }

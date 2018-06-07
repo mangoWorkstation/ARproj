@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:id="@+id/drawer_layout"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+
     tools:context="com.mango.arproj.activity.MainActivity">
+
+    <!--<com.rom4ek.arcnavigationview.ArcNavigationView-->
+        <!--android:id="@+id/nav_view"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:background="@android:color/white"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--app:itemBackground="@android:color/white"-->
+        <!--app:headerLayout="@layout/nav_header_main"-->
+        <!--app:menu="@menu/activity_main_drawer"-->
+        <!--app:arc_cropDirection="cropOutside"-->
+        <!--app:arc_width="96dp"/>-->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -26,7 +44,7 @@
                 android:id="@+id/btn_main_join"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="36dp"
                 android:layout_marginEnd="52dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_oval_normal"
@@ -52,7 +70,7 @@
                 android:layout_height="80dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="36dp"
                 android:layout_weight="1"
                 app:bmb_buttonEnum="simpleCircle"
                 app:bmb_buttonPlaceEnum="buttonPlace_sc_5_1"
@@ -67,4 +85,4 @@
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.DrawerLayout>

@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.mango.arproj.R;
 import com.mango.arproj.util.ARutil;
+import com.mango.arproj.util.ClazzTransformer;
 import com.mango.arproj.util.Encryptor;
 import com.mango.arproj.util.JSONDecodeFormatter;
 import com.mango.arproj.util.JSONEncodeFormatter;
@@ -41,6 +42,8 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity{
 
+
+    private String TAG = ClazzTransformer.getClazzTAG(this);
 
     // UI references.
     private AutoCompleteTextView phoneView;
@@ -86,6 +89,7 @@ public class LoginActivity extends AppCompatActivity{
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
     }
 
 
@@ -175,9 +179,10 @@ public class LoginActivity extends AppCompatActivity{
                             String uuid = data_obj.get("uuid");
                             String token = data_obj.get("token");
 
-                            SharedPreferences.Editor editor = getSharedPreferences("userData",MODE_PRIVATE).edit();
+                            SharedPreferences.Editor editor = getSharedPreferences(ARutil.getSharePreferencePath(),MODE_PRIVATE).edit();
                             editor.putString("uuid",uuid);
                             editor.putString("token",token);
+                            editor.apply();
 
                             LoginActivity.this.runOnUiThread(new Runnable() {
                                 @Override

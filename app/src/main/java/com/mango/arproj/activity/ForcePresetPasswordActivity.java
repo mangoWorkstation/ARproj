@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.mango.arproj.R;
 import com.mango.arproj.util.ARutil;
+import com.mango.arproj.util.ClazzTransformer;
 import com.mango.arproj.util.Encryptor;
 import com.mango.arproj.util.JSONDecodeFormatter;
 import com.mango.arproj.util.JSONEncodeFormatter;
@@ -35,6 +36,8 @@ public class ForcePresetPasswordActivity extends AppCompatActivity {
 
     private String tel;
 
+    private String TAG = ClazzTransformer.getClazzTAG(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,8 @@ public class ForcePresetPasswordActivity extends AppCompatActivity {
                 submitPassword();
             }
         });
+
+
 
     }
 
@@ -104,6 +109,7 @@ public class ForcePresetPasswordActivity extends AppCompatActivity {
                                     Toast.makeText(ForcePresetPasswordActivity.this,"设置成功，请完成资料完善",Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(ForcePresetPasswordActivity.this,UserProfileImplementationActivity.class);
                                     intent.putExtra("token",token);
+                                    intent.putExtra("isAfterRegister",1);
                                     startActivity(intent);
                                     finish();
                                 }
