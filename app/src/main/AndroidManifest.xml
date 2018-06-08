@@ -84,19 +84,20 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".activity.ForcePresetPasswordActivity"
             android:label="@string/title_activity_force_preset_password"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
             android:name=".activity.UserProfileImplementationActivity"
             android:label="@string/title_activity_user_profile_preset"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity android:name=".activity.CreateTeamActivity"></activity>
     </application>
 
 </manifest>

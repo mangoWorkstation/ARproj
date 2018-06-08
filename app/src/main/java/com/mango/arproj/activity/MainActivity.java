@@ -2,13 +2,22 @@ package com.mango.arproj.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
@@ -37,6 +46,7 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -426,23 +436,70 @@ public class MainActivity extends DrawerActivity{
                 })
                 .normalImageRes(R.drawable.icon_user));
 
+        //进入设置
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
                 .normalImageRes(R.drawable.icon_setting));
 
+        //查看记录
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
                 .normalImageRes(R.drawable.icon_record));
 
+        //查看点赞数
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
                 .normalImageRes(R.drawable.icon_thumbup));
 
+        //查看统计
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
                 .normalImageRes(R.drawable.icon_stats));
+
+        //创建队伍
+        boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
+                .normalImageRes(R.drawable.icon_createteam));
+
+        //加入队伍
+        boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
+                .normalImageRes(R.drawable.icon_join));
 
 
         //初始化"组建队伍"和"加入队伍"按钮
 
-        ImageButton createTeamBtn = findViewById(R.id.btn_main_createTeam);
-        createTeamBtn.setImageResource(R.drawable.icon_createteam);
+//        ImageButton createTeamBtn = findViewById(R.id.btn_main_createTeam);
+//        createTeamBtn.setImageResource(R.drawable.icon_createteam);
+//        createTeamBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ConstraintLayout base = findViewById(R.id.base_layout_main);
+//
+//                LinearLayout teamGridView = (LinearLayout) View.inflate(MainActivity.this,R.layout.grid_team,null);
+//
+//                GridView gridView = teamGridView.findViewById(R.id.team_grid);
+//
+//                ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+//                int[] imageint =new int[6];
+//                imageint[0]=R.drawable.icon_appicon;
+//                imageint[1]=R.drawable.icon_appicon;
+//                imageint[2]=R.drawable.icon_appicon;
+//                imageint[3]=R.drawable.icon_appicon;
+//                imageint[4]=R.drawable.icon_appicon;
+//                imageint[5]=R.drawable.icon_appicon;
+//
+//                for(int i=0;i<=5;i++){
+//                    HashMap<String, Object> hash = new HashMap<String, Object>();
+//                    hash.put("image",imageint[i]);
+//                    hash.put("text", "image"+i);
+//                    data.add(hash);
+//                }
+//                String[] form = {"image","text"};
+//                int[] to =new int [2];
+//                to[0]=R.id.image;
+//                to[1]=R.id.text;
+//                SimpleAdapter simpleadapter = new SimpleAdapter(MainActivity.this, data, R.layout.menber_icon_name, form, to);
+//                gridView.setAdapter(simpleadapter);
+//
+//                base.addView(gridView,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
+//
+//            }
+//        });
 
     }
 

@@ -10,19 +10,7 @@
     tools:openDrawer="start"
 
     tools:context="com.mango.arproj.activity.MainActivity">
-
-    <!--<com.rom4ek.arcnavigationview.ArcNavigationView-->
-        <!--android:id="@+id/nav_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="start"-->
-        <!--android:background="@android:color/white"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--app:itemBackground="@android:color/white"-->
-        <!--app:headerLayout="@layout/nav_header_main"-->
-        <!--app:menu="@menu/activity_main_drawer"-->
-        <!--app:arc_cropDirection="cropOutside"-->
-        <!--app:arc_width="96dp"/>-->
+    
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -37,32 +25,9 @@
             android:layout_height="match_parent"/>
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/base_layout_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/btn_main_join"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginBottom="36dp"
-                android:layout_marginEnd="52dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_oval_normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/icon_join" />
-
-            <ImageButton
-                android:id="@+id/btn_main_createTeam"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_marginBottom="36dp"
-                android:layout_marginStart="52dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_oval_normal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/icon_createteam" />
 
             <com.nightonke.boommenu.BoomMenuButton
                 android:id="@+id/btn_main_menu"
@@ -73,12 +38,12 @@
                 android:layout_marginBottom="36dp"
                 android:layout_weight="1"
                 app:bmb_buttonEnum="simpleCircle"
-                app:bmb_buttonPlaceEnum="buttonPlace_sc_5_1"
-                app:bmb_piecePlaceEnum="piecePlace_dot_5_1"
+                app:bmb_buttonPlaceEnum="buttonPlace_sc_7_1"
+                app:bmb_piecePlaceEnum="piecePlace_dot_7_1"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_main_join"
-                app:layout_constraintHorizontal_bias="0.565"
-                app:layout_constraintStart_toEndOf="@+id/btn_main_createTeam">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent">
 
             </com.nightonke.boommenu.BoomMenuButton>
 
