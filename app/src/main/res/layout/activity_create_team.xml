@@ -1,9 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.CreateTeamActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.amap.api.maps.MapView
+
+            android:id="@+id/map_create_team"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_create_team_start"
+                android:layout_width="127dp"
+                android:layout_height="57dp"
+                android:layout_marginBottom="56dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="#7ab800"
+                fancy:fb_focusColor="#9bd823"
+                fancy:fb_fontIconResource="&#xf04b;"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="30dp"
+                fancy:fb_text="开始"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:layout_constraintBottom_toBottomOf="parent"
+                fancy:layout_constraintEnd_toEndOf="parent"
+                fancy:layout_constraintHorizontal_bias="0.5"
+                fancy:layout_constraintStart_toStartOf="parent" />
+
+            <GridView
+                android:id="@+id/gridview_create_team"
+                android:layout_width="344dp"
+                android:layout_height="211dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#004A00"
+                android:numColumns="3"
+                fancy:layout_constraintEnd_toEndOf="parent"
+                fancy:layout_constraintHorizontal_bias="0.5"
+                fancy:layout_constraintStart_toStartOf="parent"
+                fancy:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_create_team_joincode"
+                android:layout_width="204dp"
+                android:layout_height="65dp"
+                android:layout_marginBottom="60dp"
+                android:fontFamily="sans-serif"
+                android:text="TextView"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                fancy:layout_constraintBottom_toTopOf="@+id/btn_create_team_start"
+                fancy:layout_constraintEnd_toEndOf="parent"
+                fancy:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

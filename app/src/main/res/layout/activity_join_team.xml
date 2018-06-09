@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.CreateTeamActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.amap.api.maps.MapView
+
+            android:id="@+id/map_join_team"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <GridView
+                android:id="@+id/gridview_join_team"
+                android:layout_width="344dp"
+                android:layout_height="211dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#004A00"
+                android:numColumns="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_join_team_joincode"
+                android:layout_width="204dp"
+                android:layout_height="65dp"
+                android:layout_marginBottom="116dp"
+                android:fontFamily="sans-serif"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

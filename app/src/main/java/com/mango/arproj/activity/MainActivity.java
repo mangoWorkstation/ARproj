@@ -1,23 +1,20 @@
 package com.mango.arproj.activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
+
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
@@ -46,7 +43,6 @@ import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.ButtonEnum;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -90,6 +86,19 @@ public class MainActivity extends DrawerActivity{
 
     private Bitmap userIcon=null;
 
+//    private IntentFilter intentFilter;
+//
+//    private CreateTeamBroadcastReceiver receiver;
+//
+//    class CreateTeamBroadcastReceiver extends android.content.BroadcastReceiver{
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Toast.makeText(MainActivity.this,intent.getStringExtra("msg"),Toast.LENGTH_LONG).show();
+//            Log.d("MainActivity+broadcast",intent.getStringExtra("msg"));
+//        }
+//    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +130,33 @@ public class MainActivity extends DrawerActivity{
 
 
 
+//        intentFilter = new IntentFilter();
+//        intentFilter.addAction("com.mango.arproj.broadCast.ON_NEW_MEMBER_JOIN_IN");
+//
+//        receiver = new CreateTeamBroadcastReceiver();
+//        registerReceiver(receiver,intentFilter);
+
+
+
     }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences pref = getSharedPreferences(ARutil.getSharePreferencePath(),MODE_PRIVATE);
+        token = pref.getString("token",null);
+        if(token!=null){
+            uuid = pref.getString("uuid",null);
+            requestForUserProfile(token,uuid);
+        }
+        else{
+            initEmptyDrawer();
+        }
+    }
+
+
 
     private void initUserProfileDrawer(User user){
         clearItems();
@@ -237,7 +272,7 @@ public class MainActivity extends DrawerActivity{
         addItem(
                 new DrawerItem()
                         .setImage(getResources().getDrawable(R.drawable.icon_phone))
-                        .setTextPrimary("请使用手机号注册噢～")
+                        .setTextPrimary("请使用手机号登录噢～")
         );
     }
 
@@ -384,9 +419,9 @@ public class MainActivity extends DrawerActivity{
 
         infoThread.start();
 
-        synchronized (this){
-            iconThread.start();
-        }
+//        synchronized (this){
+//            iconThread.start();
+//        }
 
 
     }
@@ -395,7 +430,7 @@ public class MainActivity extends DrawerActivity{
 
     private void initAmap(Bundle savedInstanceState){
         //获取地图控件引用
-        mMapView = findViewById(R.id.map);
+        mMapView = findViewById(R.id.map_main);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mMapView.onCreate(savedInstanceState);
         //初始化地图控制器对象
@@ -454,11 +489,53 @@ public class MainActivity extends DrawerActivity{
 
         //创建队伍
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
-                .normalImageRes(R.drawable.icon_createteam));
+                .normalImageRes(R.drawable.icon_createteam)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        Intent intent = new Intent(MainActivity.this,CreateTeamActivity.class);
+                        intent.putExtra("token",token);
+                        intent.putExtra("uuid",uuid);
+                        startActivity(intent);
+                    }
+                })
+        );
 
         //加入队伍
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
-                .normalImageRes(R.drawable.icon_join));
+                .normalImageRes(R.drawable.icon_join)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+
+                        final AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                        final EditText editText = new EditText(MainActivity.this);
+                        dialog.setView(editText);
+                        dialog.setTitle("输入6位数字邀请码");
+                        dialog.setMessage("就差一步就完成了！");
+                        dialog.setCancelable(true);
+                        dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(!TextUtils.isEmpty(editText.getText().toString())){
+                                    editText.setError(null);
+                                    Intent intent = new Intent(MainActivity.this,JoinTeamActivity.class);
+                                    intent.putExtra("token",token);
+                                    intent.putExtra("uuid",uuid);
+                                    intent.putExtra("joinCode",editText.getText().toString());
+                                    startActivity(intent);
+                                }
+                                else{
+                                    editText.setError("邀请码不可为空噢");
+                                }
+
+                            }
+                        });
+
+                        dialog.show();
+
+                    }
+                }));
 
 
         //初始化"组建队伍"和"加入队伍"按钮
@@ -506,6 +583,7 @@ public class MainActivity extends DrawerActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+//        unregisterReceiver(receiver);
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         mMapView.onDestroy();
     }

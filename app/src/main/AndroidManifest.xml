@@ -97,7 +97,13 @@
             android:name=".activity.UserProfileImplementationActivity"
             android:label="@string/title_activity_user_profile_preset"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".activity.CreateTeamActivity"></activity>
+        <activity
+            android:name=".activity.CreateTeamActivity"
+            android:label="@string/title_activity_create_team"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity android:name=".activity.JoinTeamActivity"
+            android:label="@string/title_activity_join_team"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
     </application>
 
 </manifest>

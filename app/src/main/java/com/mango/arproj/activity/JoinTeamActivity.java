@@ -1,10 +1,8 @@
 package com.mango.arproj.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +12,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
@@ -26,28 +23,22 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.mango.arproj.R;
-import com.mango.arproj.component.AliyunMsgServiceCenter;
 import com.mango.arproj.entity.Room;
-import com.mango.arproj.entity.User;
 import com.mango.arproj.util.ARutil;
-import com.mango.arproj.util.Encryptor;
 import com.mango.arproj.util.JSONDecodeFormatter;
 import com.mango.arproj.util.JSONEncodeFormatter;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
-import mehdi.sakout.fancybuttons.FancyButton;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class CreateTeamActivity extends AppCompatActivity {
-
+public class JoinTeamActivity extends AppCompatActivity {
     //高德相关
     private AMapLocationClient mlocationClient;
     private LocationSource.OnLocationChangedListener mListener;
@@ -63,6 +54,7 @@ public class CreateTeamActivity extends AppCompatActivity {
     //用户相关
     private String token;
     private String uuid;
+    private String joinCode;
 
     //房间相关
 
@@ -76,51 +68,60 @@ public class CreateTeamActivity extends AppCompatActivity {
 
     private SimpleAdapter gridAdapter;
 
-    private IntentFilter intentFilter;
+    //监听成员动态变化
+    private JoinTeamBroadcastReceiver updateMemberReceiver;
 
-    private NewMemberJoinBroadcastReceiver receiver;
+    //监听房主注销房间
+    private JoinTeamBroadcastReceiver roomDismissReceiver;
+
 
     private GridView gridView;
 
-
-    class NewMemberJoinBroadcastReceiver extends android.content.BroadcastReceiver{
+    class JoinTeamBroadcastReceiver extends android.content.BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("CreateTeamActivity",intent.getStringExtra("msg"));
-            HashMap<String,Object> res = JSONDecodeFormatter.decodeDataArray(intent.getStringExtra("msg"));
-            ArrayList<HashMap<String,String>> data = (ArrayList<HashMap<String, String>>) res.get("data");
+            //成员发生变化时
+            if(ARutil.getActionNewMemberJoinIn().compareTo(intent.getAction())==0){
+                Log.d("JoinTeamActivity",intent.getStringExtra("msg"));
+                HashMap<String,Object> res = JSONDecodeFormatter.decodeDataArray(intent.getStringExtra("msg"));
+                ArrayList<HashMap<String,String>> data = (ArrayList<HashMap<String, String>>) res.get("data");
 
-            CreateTeamActivity.this.names.clear();
-            CreateTeamActivity.this.icons.clear();
-            CreateTeamActivity.this.userProfiles.clear();
+                JoinTeamActivity.this.names.clear();
+                JoinTeamActivity.this.icons.clear();
+                JoinTeamActivity.this.userProfiles.clear();
 
-            for(int i=0;i<data.size();i++){
-                CreateTeamActivity.this.icons.add(R.drawable.icon_appicon);
-                CreateTeamActivity.this.names.add(data.get(i).get("name"));
+                for(int i=0;i<data.size();i++){
+                    JoinTeamActivity.this.icons.add(R.drawable.icon_appicon);
+                    JoinTeamActivity.this.names.add(data.get(i).get("name"));
+                }
+
+                for(int i = 0;i<icons.size();i++){
+                    HashMap<String, Object> hash = new HashMap<String, Object>();
+                    hash.put("image",icons.get(i));
+                    hash.put("text", names.get(i));
+                    userProfiles.add(hash);
+                }
+
+
+                JoinTeamActivity.this.refreshGridView(userProfiles);
             }
 
-            for(int i = 0;i<icons.size();i++){
-                HashMap<String, Object> hash = new HashMap<String, Object>();
-                hash.put("image",icons.get(i));
-                hash.put("text", names.get(i));
-                userProfiles.add(hash);
+            //房主解散房间时
+            if(ARutil.getActionDismissRoom().compareTo(intent.getAction())==0){
+                Toast.makeText(JoinTeamActivity.this,"房主解散了房间",Toast.LENGTH_LONG).show();
+                finish();
             }
 
-            CreateTeamActivity.this.refreshGridView(userProfiles);
-
-//            SimpleAdapter sa = (SimpleAdapter)gridView.getAdapter();
-//            sa.notifyDataSetChanged();
 
 
-//            gridAdapter.notifyDataSetChanged();
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_team);
+        setContentView(R.layout.activity_join_team);
 
         currentRoom = new Room();
 
@@ -128,41 +129,41 @@ public class CreateTeamActivity extends AppCompatActivity {
 
         token = getIntent().getStringExtra("token");
         uuid = getIntent().getStringExtra("uuid");
+        joinCode = getIntent().getStringExtra("joinCode");
 
-        requestForCreateRoom(token,uuid);
 
         initAmap(savedInstanceState);
 
         initEmptyGridView();
 
-        //设置开始按钮
-        FancyButton startBtn = findViewById(R.id.btn_create_team_start);
-        startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO Intent implemented.
-            }
-        });
+        requestForJoinIn(token,uuid,joinCode);
 
-        intentFilter = new IntentFilter();
-        intentFilter.addAction(ARutil.getActionNewMemberJoinIn());
 
-        receiver = new NewMemberJoinBroadcastReceiver();
-        registerReceiver(receiver,intentFilter);
+        //设置监听器：成员发生变化
+        IntentFilter intentFilter_new_member_join = new IntentFilter();
+        intentFilter_new_member_join.addAction(ARutil.getActionNewMemberJoinIn());
+
+        updateMemberReceiver = new JoinTeamBroadcastReceiver();
+        registerReceiver(updateMemberReceiver,intentFilter_new_member_join);
+
+        //设置监听器：房间被房主解散
+        IntentFilter intentFilter_room_dismiss = new IntentFilter();
+        intentFilter_room_dismiss.addAction(ARutil.getActionDismissRoom());
+
+        roomDismissReceiver = new JoinTeamBroadcastReceiver();
+        registerReceiver(roomDismissReceiver,intentFilter_room_dismiss);
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(receiver);
+        unregisterReceiver(updateMemberReceiver);
     }
 
     //初始化gridview
     private void initEmptyGridView(){
-        this.gridView = findViewById(R.id.gridview_create_team);
-
-        ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+        gridView = findViewById(R.id.gridview_join_team);
 
         ArrayList<HashMap<String, Object>> userProfiles = new ArrayList<HashMap<String, Object>>();
 
@@ -183,24 +184,24 @@ public class CreateTeamActivity extends AppCompatActivity {
         int[] to =new int [2];
         to[0]=R.id.image_member_layout_icon;
         to[1]=R.id.text_member_layout_name;
-        gridAdapter = new SimpleAdapter(CreateTeamActivity.this, userProfiles, R.layout.menber_icon_name, form, to);
+        gridAdapter = new SimpleAdapter(JoinTeamActivity.this, userProfiles, R.layout.menber_icon_name, form, to);
         gridView.setAdapter(gridAdapter);
     }
 
     private void refreshGridView(ArrayList<HashMap<String,Object>> _userProfiles){
-        this.gridView = findViewById(R.id.gridview_create_team);
+        this.gridView = findViewById(R.id.gridview_join_team);
 
         String[] form = {"image","text"};
         int[] to =new int [2];
         to[0]=R.id.image_member_layout_icon;
         to[1]=R.id.text_member_layout_name;
-        gridAdapter = new SimpleAdapter(CreateTeamActivity.this, _userProfiles, R.layout.menber_icon_name, form, to);
+        gridAdapter = new SimpleAdapter(JoinTeamActivity.this, _userProfiles, R.layout.menber_icon_name, form, to);
         gridView.setAdapter(gridAdapter);
     }
 
 
-    //请求创建房间
-    private void requestForCreateRoom(final String token, final String uuid){
+    //请求加入队伍
+    private void requestForJoinIn(final String token, final String uuid,final String joinCode){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -208,8 +209,9 @@ public class CreateTeamActivity extends AppCompatActivity {
                 HashMap<String, String> data = new HashMap<>();
                 data.put("token",token);
                 data.put("uuid", uuid);
+                data.put("joinCode",joinCode);
 
-                String postBody = JSONEncodeFormatter.parser(10007, data);
+                String postBody = JSONEncodeFormatter.parser(10009, data);
 
 
                 Log.d("postBody", postBody);
@@ -218,7 +220,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
                         //设置请求URL
-                        .url(ARutil.getRoomURL())
+                        .url(ARutil.getTeamPoolURL())
                         //装入处理后的字符串，使用post方式
                         .post(RequestBody.create(
                                 MediaType.parse("application/json; charset=utf-8"),
@@ -231,42 +233,45 @@ public class CreateTeamActivity extends AppCompatActivity {
                     response = client.newCall(request).execute();
                     //获取response中的字符
                     final String re = response.body().string();
-                    HashMap<String,Object> msg = JSONDecodeFormatter.decodeDataObject(re);
+                    HashMap<String,Object> msg = JSONDecodeFormatter.decodeDataArray(re);
                     String code = (String) msg.get("code");
                     if("0".compareTo(code)==0){
+                        JoinTeamActivity.this.currentRoom.setUid((String) msg.get("uid"));
+                        ArrayList<HashMap<String,String>> data_arr = (ArrayList<HashMap<String, String>>) msg.get("data");
 
-                        HashMap<String,String> data_obj = (HashMap<String, String>) msg.get("data");
-                        String roomUid = data_obj.get("roomUid");
-                        final String joinCode = data_obj.get("joinCode");
-                        String joinCode_expire_t = data_obj.get("joinCode_expire_t");
-                        String state = data_obj.get("state");
-                        String created_t = data_obj.get("created_t");
+                        for(int i=0;i<data_arr.size();i++){
+                            JoinTeamActivity.this.icons.add(R.drawable.icon_appicon);
+                            JoinTeamActivity.this.names.add(data_arr.get(i).get("name"));
+                        }
 
-                        CreateTeamActivity.this.currentRoom = new Room();
-                        CreateTeamActivity.this.currentRoom.setUid(roomUid);
-                        CreateTeamActivity.this.currentRoom.setJoinCode(joinCode);
-                        CreateTeamActivity.this.currentRoom.setJoinCode_expire_t(joinCode_expire_t);
-                        CreateTeamActivity.this.currentRoom.setState(Integer.valueOf(state));
-                        CreateTeamActivity.this.currentRoom.setCreated_t(created_t);
+                        for(int i = 0;i<icons.size();i++){
+                            HashMap<String, Object> hash = new HashMap<String, Object>();
+                            hash.put("image",icons.get(i));
+                            hash.put("text", names.get(i));
+                            userProfiles.add(hash);
+                        }
 
 
-                        CreateTeamActivity.this.runOnUiThread(new Runnable() {
+
+                        JoinTeamActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                TextView joinCodeView = CreateTeamActivity.this.findViewById(R.id.textview_create_team_joincode);
-                                joinCodeView.setText("邀请码："+joinCode);
+                                JoinTeamActivity.this.refreshGridView(userProfiles);
+//                                JoinTeamActivity.this.gridAdapter.notifyDataSetChanged();
+                                TextView joinCodeView = JoinTeamActivity.this.findViewById(R.id.textview_join_team_joincode);
+                                joinCodeView.setText("邀请码："+joinCode+"\n正在等待房主开始游戏...");
                                 joinCodeView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                Toast.makeText(CreateTeamActivity.this,"房间创建成功，告诉朋友们来参加吧",Toast.LENGTH_LONG).show();
+                                Toast.makeText(JoinTeamActivity.this,"加入队伍成功，告诉朋友们来参加吧",Toast.LENGTH_LONG).show();
                             }
                         });
                     }
                     else{
 
-                        CreateTeamActivity.this.runOnUiThread(new Runnable() {
+                        JoinTeamActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 //使用json格式化解码器处理短回复
-                                Toast.makeText(CreateTeamActivity.this,"服务器正忙，请稍后重试噢",Toast.LENGTH_LONG).show();
+                                Toast.makeText(JoinTeamActivity.this,"邀请码不存在噢",Toast.LENGTH_LONG).show();
                                 finish();
                             }
                         });
@@ -285,7 +290,7 @@ public class CreateTeamActivity extends AppCompatActivity {
 
     private void initAmap(Bundle savedInstanceState){
         //获取地图控件引用
-        mMapView = findViewById(R.id.map_create_team);
+        mMapView = findViewById(R.id.map_join_team);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mMapView.onCreate(savedInstanceState);
         //初始化地图控制器对象
@@ -310,6 +315,7 @@ public class CreateTeamActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -319,7 +325,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                 data.put("uuid", uuid);
                 data.put("roomUid",currentRoom.getUid());
 
-                String postBody = JSONEncodeFormatter.parser(10008, data);
+                String postBody = JSONEncodeFormatter.parser(10016, data);
 
 
                 Log.d("postBody", postBody);
@@ -328,7 +334,7 @@ public class CreateTeamActivity extends AppCompatActivity {
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
                         //设置请求URL
-                        .url(ARutil.getRoomURL())
+                        .url(ARutil.getTeamPoolURL())
                         //装入处理后的字符串，使用post方式
                         .post(RequestBody.create(
                                 MediaType.parse("application/json; charset=utf-8"),
@@ -345,10 +351,10 @@ public class CreateTeamActivity extends AppCompatActivity {
                     String code = (String) msg.get("code");
                     if("0".compareTo(code)==0){
 
-                        CreateTeamActivity.this.runOnUiThread(new Runnable() {
+                        JoinTeamActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(CreateTeamActivity.this,"您已退出房间",Toast.LENGTH_LONG).show();
+                                Toast.makeText(JoinTeamActivity.this,"您已退出房间",Toast.LENGTH_LONG).show();
                                 finish();
                             }
                         });
@@ -363,5 +369,6 @@ public class CreateTeamActivity extends AppCompatActivity {
         }).start();
 
         super.onBackPressed();
+
     }
 }

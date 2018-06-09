@@ -1,10 +1,13 @@
 package com.mango.arproj.component;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.alibaba.sdk.android.push.AliyunMessageIntentService;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
+import com.mango.arproj.activity.CreateTeamActivity;
+import com.mango.arproj.util.ARutil;
 
 import java.util.Map;
 
@@ -42,6 +45,17 @@ public class AliyunMsgServiceCenter extends AliyunMessageIntentService {
     @Override
     protected void onMessage(Context context, CPushMessage cPushMessage) {
         Log.i(REC_TAG,"收到一条推送消息 ： " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
+        if("有成员变动".compareTo(cPushMessage.getTitle())==0){
+            Intent intent = new Intent(ARutil.getActionNewMemberJoinIn());
+            intent.putExtra("msg",cPushMessage.getContent());
+            context.sendBroadcast(intent);
+        }
+
+        if("房主解散了房间".compareTo(cPushMessage.getTitle())==0){
+            Intent intent = new Intent(ARutil.getActionDismissRoom());
+            context.sendBroadcast(intent);
+        }
+
 
     }
 

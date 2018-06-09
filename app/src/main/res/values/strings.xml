@@ -4,6 +4,8 @@
     <string name="title_activity_register">新用户注册</string>
     <string name="title_activity_force_preset_password">首次设置密码</string>
     <string name="title_activity_user_profile_preset">修改个人资料</string>
+    <string name="title_activity_create_team">创建房间</string>
+    <string name="title_activity_join_team">组队匹配</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">手机号</string>

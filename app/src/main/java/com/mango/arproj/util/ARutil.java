@@ -72,9 +72,24 @@ public class ARutil {
     }
 
     /**
-     * 获取sharePreference存储wenjianming
+     * 获取sharePreference存储文件名
      */
     public static String getSharePreferencePath(){
         return "userData";
+    }
+
+    /**
+     * 获取action：新队员加入/退出
+     */
+    public static String getActionNewMemberJoinIn(){
+        return "com.mango.arproj.broadcast.ON_NEW_MEMBER_JOIN_IN";
+
+    }
+
+    /**
+     * 获取action：房主解散了房间
+     */
+    public static String getActionDismissRoom(){
+        return "com.mango.arproj.broadcast.ON_ROOM_DISMISS";
     }
 }
