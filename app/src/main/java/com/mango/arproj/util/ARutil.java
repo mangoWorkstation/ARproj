@@ -92,4 +92,11 @@ public class ARutil {
     public static String getActionDismissRoom(){
         return "com.mango.arproj.broadcast.ON_ROOM_DISMISS";
     }
+
+    /**
+     * 获取action：游戏开始
+     */
+    public static String getActionGameStarted(){
+        return "com.mango.arproj.broadcast.ON_GAME_STARTED";
+    }
 }

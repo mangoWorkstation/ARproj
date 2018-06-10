@@ -56,6 +56,12 @@ public class AliyunMsgServiceCenter extends AliyunMessageIntentService {
             context.sendBroadcast(intent);
         }
 
+        if("游戏开始了噢".compareTo(cPushMessage.getTitle())==0){
+            Intent intent = new Intent(ARutil.getActionGameStarted());
+            intent.putExtra("msg",cPushMessage.getContent());
+            context.sendBroadcast(intent);
+        }
+
 
     }
 

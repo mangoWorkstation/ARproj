@@ -1,9 +1,7 @@
 package com.mango.arproj.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -127,14 +125,6 @@ public class MainActivity extends DrawerActivity{
         else{
             initEmptyDrawer();
         }
-
-
-
-//        intentFilter = new IntentFilter();
-//        intentFilter.addAction("com.mango.arproj.broadCast.ON_NEW_MEMBER_JOIN_IN");
-//
-//        receiver = new CreateTeamBroadcastReceiver();
-//        registerReceiver(receiver,intentFilter);
 
 
 
@@ -512,7 +502,7 @@ public class MainActivity extends DrawerActivity{
                         final EditText editText = new EditText(MainActivity.this);
                         dialog.setView(editText);
                         dialog.setTitle("输入6位数字邀请码");
-                        dialog.setMessage("就差一步就完成了！");
+                        dialog.setMessage("快去查看好友的界面上显示的邀请码哟");
                         dialog.setCancelable(true);
                         dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                             @Override
@@ -538,45 +528,6 @@ public class MainActivity extends DrawerActivity{
                 }));
 
 
-        //初始化"组建队伍"和"加入队伍"按钮
-
-//        ImageButton createTeamBtn = findViewById(R.id.btn_main_createTeam);
-//        createTeamBtn.setImageResource(R.drawable.icon_createteam);
-//        createTeamBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ConstraintLayout base = findViewById(R.id.base_layout_main);
-//
-//                LinearLayout teamGridView = (LinearLayout) View.inflate(MainActivity.this,R.layout.grid_team,null);
-//
-//                GridView gridView = teamGridView.findViewById(R.id.team_grid);
-//
-//                ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
-//                int[] imageint =new int[6];
-//                imageint[0]=R.drawable.icon_appicon;
-//                imageint[1]=R.drawable.icon_appicon;
-//                imageint[2]=R.drawable.icon_appicon;
-//                imageint[3]=R.drawable.icon_appicon;
-//                imageint[4]=R.drawable.icon_appicon;
-//                imageint[5]=R.drawable.icon_appicon;
-//
-//                for(int i=0;i<=5;i++){
-//                    HashMap<String, Object> hash = new HashMap<String, Object>();
-//                    hash.put("image",imageint[i]);
-//                    hash.put("text", "image"+i);
-//                    data.add(hash);
-//                }
-//                String[] form = {"image","text"};
-//                int[] to =new int [2];
-//                to[0]=R.id.image;
-//                to[1]=R.id.text;
-//                SimpleAdapter simpleadapter = new SimpleAdapter(MainActivity.this, data, R.layout.menber_icon_name, form, to);
-//                gridView.setAdapter(simpleadapter);
-//
-//                base.addView(gridView,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
-//
-//            }
-//        });
 
     }
 
@@ -605,7 +556,6 @@ public class MainActivity extends DrawerActivity{
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
         mMapView.onSaveInstanceState(outState);
     }
-
 
 
 

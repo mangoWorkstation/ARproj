@@ -140,7 +140,12 @@ public class CreateTeamActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Intent implemented.
+                //跳转到设置AR信物位置页面
+                Intent intent = new Intent(CreateTeamActivity.this,InstallARPackActivity.class);
+                intent.putExtra("token",token);
+                intent.putExtra("uuid",uuid);
+                intent.putExtra("roomUid",currentRoom.getUid());
+                startActivity(intent);
             }
         });
 

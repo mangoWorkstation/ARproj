@@ -74,6 +74,9 @@ public class JoinTeamActivity extends AppCompatActivity {
     //监听房主注销房间
     private JoinTeamBroadcastReceiver roomDismissReceiver;
 
+    //监听游戏开始
+    private JoinTeamBroadcastReceiver gameStartReceiver;
+
 
     private GridView gridView;
 
@@ -111,6 +114,22 @@ public class JoinTeamActivity extends AppCompatActivity {
             if(ARutil.getActionDismissRoom().compareTo(intent.getAction())==0){
                 Toast.makeText(JoinTeamActivity.this,"房主解散了房间",Toast.LENGTH_LONG).show();
                 finish();
+            }
+
+            //开始游戏时
+
+            if(ARutil.getActionGameStarted().compareTo(intent.getAction())==0){
+
+                // TODO intent implemented
+                // 跳转到比赛界面
+                String msg = intent.getStringExtra("msg");
+                Intent newIntent = new Intent(JoinTeamActivity.this,GamingActivity.class);
+                newIntent.putExtra("msg",msg);
+                newIntent.putExtra("token",token);
+                newIntent.putExtra("uuid",uuid);
+                newIntent.putExtra("roomUid",currentRoom.getUid());
+                startActivity(newIntent);
+
             }
 
 
@@ -153,12 +172,21 @@ public class JoinTeamActivity extends AppCompatActivity {
         roomDismissReceiver = new JoinTeamBroadcastReceiver();
         registerReceiver(roomDismissReceiver,intentFilter_room_dismiss);
 
+        //设置监听器：游戏开始
+        IntentFilter intentFilter_gameStart = new IntentFilter();
+        intentFilter_gameStart.addAction(ARutil.getActionGameStarted());
+
+        gameStartReceiver = new JoinTeamBroadcastReceiver();
+        registerReceiver(gameStartReceiver,intentFilter_gameStart);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(updateMemberReceiver);
+        unregisterReceiver(roomDismissReceiver);
+        unregisterReceiver(gameStartReceiver);
     }
 
     //初始化gridview

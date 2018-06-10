@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.GamingActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.amap.api.maps.MapView
+
+            android:id="@+id/map_gaming"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_gaming_start"
+                android:layout_width="114dp"
+                android:layout_height="58dp"
+                android:layout_marginBottom="56dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="#7ab800"
+                fancy:fb_focusColor="#9bd823"
+                fancy:fb_fontIconResource="&#xf030;"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="30dp"
+                fancy:fb_text="开始"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:layout_constraintBottom_toBottomOf="parent"
+                fancy:layout_constraintEnd_toEndOf="parent"
+                fancy:layout_constraintHorizontal_bias="0.5"
+                fancy:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

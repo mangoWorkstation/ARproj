@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.InstallARPackActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.amap.api.maps.MapView
+
+            android:id="@+id/map_install_arpack"
+
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_install_arpack_start"
+                android:layout_width="114dp"
+                android:layout_height="58dp"
+                android:layout_marginBottom="56dp"
+                android:layout_marginEnd="16dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="#7ab800"
+                fancy:fb_focusColor="#9bd823"
+                fancy:fb_fontIconResource="&#xf04b;"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="30dp"
+                fancy:fb_text="开始"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:layout_constraintBottom_toBottomOf="parent"
+                fancy:layout_constraintEnd_toEndOf="parent" />
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_install_arpack_submit_ar"
+                android:layout_width="116dp"
+                android:layout_height="58dp"
+                android:layout_marginBottom="56dp"
+                android:layout_marginStart="16dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="#f1bc1e"
+                fancy:fb_focusColor="#9bd823"
+                fancy:fb_fontIconResource="&#xf135;"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="30dp"
+                fancy:fb_text="提交\n位置"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:layout_constraintBottom_toBottomOf="parent"
+                fancy:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

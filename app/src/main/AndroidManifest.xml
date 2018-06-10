@@ -101,9 +101,18 @@
             android:name=".activity.CreateTeamActivity"
             android:label="@string/title_activity_create_team"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
-        <activity android:name=".activity.JoinTeamActivity"
+        <activity
+            android:name=".activity.JoinTeamActivity"
             android:label="@string/title_activity_join_team"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
+            android:name=".activity.InstallARPackActivity"
+            android:label="@string/title_activity_install_arpack"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
+            android:name=".activity.GamingActivity"
+            android:label="@string/title_activity_gaming"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
     </application>
 
 </manifest>
