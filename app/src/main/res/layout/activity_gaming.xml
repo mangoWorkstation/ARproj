@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_gaming_start"
+                android:id="@+id/btn_gaming_open_camera"
                 android:layout_width="114dp"
                 android:layout_height="58dp"
                 android:layout_marginBottom="56dp"

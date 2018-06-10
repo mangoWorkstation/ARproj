@@ -1,9 +1,11 @@
 package com.mango.arproj.activity;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -17,11 +19,14 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.mango.arproj.R;
+import com.mango.arproj.activity.ar.ARCameraActivity;
 import com.mango.arproj.util.JSONDecodeFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class GamingActivity extends AppCompatActivity {
 
@@ -71,6 +76,15 @@ public class GamingActivity extends AppCompatActivity {
             this.arMarkers.add(marker);
             index++;
         }
+
+        FancyButton openCameraBtn = findViewById(R.id.btn_gaming_open_camera);
+        openCameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GamingActivity.this, ARCameraActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
