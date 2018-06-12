@@ -23,6 +23,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <cn.iwgang.countdownview.CountdownView
+                android:id="@+id/countdown_gaming"
+                android:layout_width="224dp"
+                android:layout_height="154dp"
+                android:layout_marginBottom="8dp"
+                fancy:layout_constraintBottom_toTopOf="@+id/btn_gaming_open_camera"
+                fancy:layout_constraintEnd_toEndOf="parent"
+                fancy:layout_constraintHorizontal_bias="0.5"
+                fancy:layout_constraintStart_toStartOf="parent" />
+
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_gaming_open_camera"
                 android:layout_width="114dp"
@@ -39,7 +49,7 @@
                 fancy:fb_fontIconResource="&#xf030;"
                 fancy:fb_iconPosition="left"
                 fancy:fb_radius="30dp"
-                fancy:fb_text="开始"
+                fancy:fb_text="打开相机"
                 fancy:fb_textColor="#FFFFFF"
                 fancy:layout_constraintBottom_toBottomOf="parent"
                 fancy:layout_constraintEnd_toEndOf="parent"

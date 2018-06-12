@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
@@ -125,6 +126,12 @@ public class MainActivity extends DrawerActivity{
         else{
             initEmptyDrawer();
         }
+
+//        LatLng latLng1 = new LatLng(38.540103,76.978787);
+//        LatLng latLng2 = new LatLng(39.90000, 116.407525);
+//
+//        float distance = AMapUtils.calculateLineDistance(latLng1,latLng2);
+//        Log.d("distanceDemo = ",String.valueOf(distance));
 
 
 

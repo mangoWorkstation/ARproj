@@ -27,7 +27,9 @@ allprojects {
             url 'https://dl.bintray.com/spark/maven'
         }
 
-        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://jitpack.io'
+        }
     }
 }
 

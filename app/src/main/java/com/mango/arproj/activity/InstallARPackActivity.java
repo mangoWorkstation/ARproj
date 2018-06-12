@@ -70,6 +70,7 @@ public class InstallARPackActivity extends AppCompatActivity {
     private String token;
     private String uuid;
     private String roomUid;
+    private String duration;
 
     private InstallARPackActivityBroadcastReceiver gameStartedReceiver;
 
@@ -86,6 +87,7 @@ public class InstallARPackActivity extends AppCompatActivity {
                 newIntent.putExtra("token",token);
                 newIntent.putExtra("uuid",uuid);
                 newIntent.putExtra("roomUid",roomUid);
+                newIntent.putExtra("duration",duration);
                 startActivity(newIntent);
             }
         }
@@ -152,13 +154,22 @@ public class InstallARPackActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!submitBtn.isEnabled()){
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(InstallARPackActivity.this);
+                    final EditText editText = new EditText(InstallARPackActivity.this);
+                    dialog.setView(editText);
                     dialog.setTitle("即将开始游戏啦");
-                    dialog.setMessage("是否确认");
+                    dialog.setMessage("请输入比赛时间（min）并确认");
                     dialog.setCancelable(true);
                     dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            requestForGameStart(InstallARPackActivity.this.token,InstallARPackActivity.this.roomUid);
+                            editText.setError(null);
+                            if(!TextUtils.isEmpty(editText.getText().toString())){
+                                InstallARPackActivity.this.duration = editText.getText().toString();
+                                requestForGameStart(InstallARPackActivity.this.token,InstallARPackActivity.this.roomUid,editText.getText().toString());
+                            }
+                            else{
+                                editText.setError("比赛时间不可为空噢");
+                            }
                         }
                     });
                     dialog.setNegativeButton("返回", new DialogInterface.OnClickListener(){
@@ -240,7 +251,7 @@ public class InstallARPackActivity extends AppCompatActivity {
     }
 
     //请求游戏开始
-    private void requestForGameStart(final String token,final String roomUid){
+    private void requestForGameStart(final String token,final String roomUid,final String duration){
 
         new Thread(new Runnable() {
             @Override
@@ -249,6 +260,7 @@ public class InstallARPackActivity extends AppCompatActivity {
                 HashMap<String, String> data = new HashMap<>();
                 data.put("token",token);
                 data.put("roomUid",roomUid);
+                data.put("duration",duration);
 
                 String postBody = JSONEncodeFormatter.parser(10011, data);
 
