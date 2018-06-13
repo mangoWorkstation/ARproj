@@ -12,6 +12,7 @@ package com.mango.arproj.activity.ar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -118,7 +119,7 @@ public class ARCameraActivity extends Activity implements
 
         addOverlayView(true);
     }
-    
+
     // Process Single Tap event to trigger autofocus
     private class GestureListener extends
         GestureDetector.SimpleOnGestureListener

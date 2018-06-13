@@ -99,4 +99,11 @@ public class ARutil {
     public static String getActionGameStarted(){
         return "com.mango.arproj.broadcast.ON_GAME_STARTED";
     }
+
+    /**
+     * 获取action：游戏结束
+     */
+    public static String getActionGameOver(){
+        return "com.mango.arproj.broadcast.ON_GAME_OVER";
+    }
 }

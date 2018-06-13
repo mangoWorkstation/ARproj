@@ -88,6 +88,7 @@ public class InstallARPackActivity extends AppCompatActivity {
                 newIntent.putExtra("uuid",uuid);
                 newIntent.putExtra("roomUid",roomUid);
                 newIntent.putExtra("duration",duration);
+                newIntent.putExtra("isRoomCreator","true");
                 startActivity(newIntent);
             }
         }

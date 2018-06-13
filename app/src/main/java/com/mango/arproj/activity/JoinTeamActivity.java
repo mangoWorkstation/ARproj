@@ -128,6 +128,7 @@ public class JoinTeamActivity extends AppCompatActivity {
                 newIntent.putExtra("token",token);
                 newIntent.putExtra("uuid",uuid);
                 newIntent.putExtra("roomUid",currentRoom.getUid());
+                newIntent.putExtra("isRoomCreator","false");
                 startActivity(newIntent);
 
             }

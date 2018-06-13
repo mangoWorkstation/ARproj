@@ -62,6 +62,12 @@ public class AliyunMsgServiceCenter extends AliyunMessageIntentService {
             context.sendBroadcast(intent);
         }
 
+        if("排行榜来咯".compareTo(cPushMessage.getTitle())==0){
+            Intent intent = new Intent(ARutil.getActionGameOver());
+            intent.putExtra("msg",cPushMessage.getContent());
+            context.sendBroadcast(intent);
+        }
+
 
     }
 

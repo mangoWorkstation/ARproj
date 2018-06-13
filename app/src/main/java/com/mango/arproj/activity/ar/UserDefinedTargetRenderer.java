@@ -71,6 +71,7 @@ public class UserDefinedTargetRenderer implements GLSurfaceView.Renderer, Sample
         // the device mode AR/VR and stereo mode
         mSampleAppRenderer = new SampleAppRenderer(this, mActivity, Device.MODE.MODE_AR, false, 10f, 5000f);
     }
+
     
     
     // Called when the surface is created or recreated.
