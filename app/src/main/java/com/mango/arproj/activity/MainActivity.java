@@ -85,19 +85,6 @@ public class MainActivity extends DrawerActivity{
 
     private Bitmap userIcon=null;
 
-//    private IntentFilter intentFilter;
-//
-//    private CreateTeamBroadcastReceiver receiver;
-//
-//    class CreateTeamBroadcastReceiver extends android.content.BroadcastReceiver{
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            Toast.makeText(MainActivity.this,intent.getStringExtra("msg"),Toast.LENGTH_LONG).show();
-//            Log.d("MainActivity+broadcast",intent.getStringExtra("msg"));
-//        }
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
