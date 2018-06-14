@@ -10,6 +10,7 @@
     <string name="title_activity_gaming">游戏正在进行中...</string>
     <string name="title_activity_rank_result">排行榜</string>
     <string name="title_activity_record_result">运动记录</string>
+    <string name="title_activity_setting">个人设置中心</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">手机号</string>

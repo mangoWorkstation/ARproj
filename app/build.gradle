@@ -74,7 +74,5 @@ dependencies {
 
     implementation 'com.github.iwgang:countdownview:2.1.6'
 
-    compile 'link.fls:swipestack:0.3.0'
-
 
 }

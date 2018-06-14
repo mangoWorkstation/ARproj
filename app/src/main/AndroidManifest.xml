@@ -135,6 +135,10 @@
         <activity
             android:name=".activity.RecordResultActivity"
             android:label="@string/title_activity_record_result"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:label="@string/title_activity_setting"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
     </application>
 

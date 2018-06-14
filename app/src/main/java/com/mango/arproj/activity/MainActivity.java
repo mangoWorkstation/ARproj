@@ -470,12 +470,24 @@ public class MainActivity extends DrawerActivity{
 
         //进入设置
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
-                .normalImageRes(R.drawable.icon_setting));
+                .normalImageRes(R.drawable.icon_setting)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        if(MainActivity.this.token!=null) {
+                            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                            intent.putExtra("token", token);
+                            intent.putExtra("uuid", uuid);
+                            startActivity(intent);
+                        }
+                        else{
+                            openDrawer();
+                            Toast.makeText(MainActivity.this,"请先登录噢！",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }));
 
 
-        //查看点赞数
-        boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
-                .normalImageRes(R.drawable.icon_thumbup));
 
         //查看统计记录
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
