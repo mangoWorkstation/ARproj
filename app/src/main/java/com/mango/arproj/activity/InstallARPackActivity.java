@@ -90,6 +90,7 @@ public class InstallARPackActivity extends AppCompatActivity {
                 newIntent.putExtra("duration",duration);
                 newIntent.putExtra("isRoomCreator","true");
                 startActivity(newIntent);
+                finish();
             }
         }
     }

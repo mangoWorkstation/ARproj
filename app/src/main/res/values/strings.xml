@@ -8,6 +8,8 @@
     <string name="title_activity_join_team">组队匹配</string>
     <string name="title_activity_install_arpack">设置AR信物位置</string>
     <string name="title_activity_gaming">游戏正在进行中...</string>
+    <string name="title_activity_rank_result">排行榜</string>
+    <string name="title_activity_record_result">运动记录</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">手机号</string>

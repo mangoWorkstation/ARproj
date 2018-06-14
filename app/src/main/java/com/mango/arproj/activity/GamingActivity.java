@@ -78,6 +78,14 @@ public class GamingActivity extends AppCompatActivity {
             if(ARutil.getActionGameOver().compareTo(intent.getAction())==0){
                 //TODO 跳转到排行榜页面
                 Log.d("rank result",intent.getStringExtra("msg"));
+
+                Intent newIntent = new Intent(GamingActivity.this,RankResultActivity.class);
+                newIntent.putExtra("msg",intent.getStringExtra("msg"));
+
+                startActivity(newIntent);
+
+                finish();
+
             }
 
         }

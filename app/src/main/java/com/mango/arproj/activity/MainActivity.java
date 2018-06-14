@@ -472,17 +472,29 @@ public class MainActivity extends DrawerActivity{
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
                 .normalImageRes(R.drawable.icon_setting));
 
-        //查看记录
-        boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
-                .normalImageRes(R.drawable.icon_record));
 
         //查看点赞数
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
                 .normalImageRes(R.drawable.icon_thumbup));
 
-        //查看统计
+        //查看统计记录
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
-                .normalImageRes(R.drawable.icon_stats));
+                .normalImageRes(R.drawable.icon_stats)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        if(MainActivity.this.token!=null) {
+                            Intent intent = new Intent(MainActivity.this, RecordResultActivity.class);
+                            intent.putExtra("token", token);
+                            intent.putExtra("uuid", uuid);
+                            startActivity(intent);
+                        }
+                        else{
+                            openDrawer();
+                            Toast.makeText(MainActivity.this,"请先登录噢！",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }));
 
         //创建队伍
         boomMenuButton.addBuilder(new SimpleCircleButton.Builder()
@@ -490,10 +502,16 @@ public class MainActivity extends DrawerActivity{
                 .listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
-                        Intent intent = new Intent(MainActivity.this,CreateTeamActivity.class);
-                        intent.putExtra("token",token);
-                        intent.putExtra("uuid",uuid);
-                        startActivity(intent);
+                        if(MainActivity.this.token!=null) {
+                            Intent intent = new Intent(MainActivity.this, CreateTeamActivity.class);
+                            intent.putExtra("token", token);
+                            intent.putExtra("uuid", uuid);
+                            startActivity(intent);
+                        }
+                        else{
+                            openDrawer();
+                            Toast.makeText(MainActivity.this,"请先登录噢！",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 })
         );
@@ -504,32 +522,38 @@ public class MainActivity extends DrawerActivity{
                 .listener(new OnBMClickListener() {
                     @Override
                     public void onBoomButtonClick(int index) {
+                        if(MainActivity.this.token!=null) {
 
-                        final AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-                        final EditText editText = new EditText(MainActivity.this);
-                        dialog.setView(editText);
-                        dialog.setTitle("输入6位数字邀请码");
-                        dialog.setMessage("快去查看好友的界面上显示的邀请码哟");
-                        dialog.setCancelable(true);
-                        dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if(!TextUtils.isEmpty(editText.getText().toString())){
-                                    editText.setError(null);
-                                    Intent intent = new Intent(MainActivity.this,JoinTeamActivity.class);
-                                    intent.putExtra("token",token);
-                                    intent.putExtra("uuid",uuid);
-                                    intent.putExtra("joinCode",editText.getText().toString());
-                                    startActivity(intent);
+                            final AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                            final EditText editText = new EditText(MainActivity.this);
+                            dialog.setView(editText);
+                            dialog.setTitle("输入6位数字邀请码");
+                            dialog.setMessage("快去查看好友的界面上显示的邀请码哟");
+                            dialog.setCancelable(true);
+                            dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    if (!TextUtils.isEmpty(editText.getText().toString())) {
+                                        editText.setError(null);
+                                        Intent intent = new Intent(MainActivity.this, JoinTeamActivity.class);
+                                        intent.putExtra("token", token);
+                                        intent.putExtra("uuid", uuid);
+                                        intent.putExtra("joinCode", editText.getText().toString());
+                                        startActivity(intent);
+                                    } else {
+                                        editText.setError("邀请码不可为空噢");
+                                    }
+
                                 }
-                                else{
-                                    editText.setError("邀请码不可为空噢");
-                                }
+                            });
 
-                            }
-                        });
+                            dialog.show();
+                        }
+                        else{
+                            openDrawer();
+                            Toast.makeText(MainActivity.this,"请先登录噢！",Toast.LENGTH_SHORT).show();
+                        }
 
-                        dialog.show();
 
                     }
                 }));
