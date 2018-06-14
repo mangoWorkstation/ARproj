@@ -182,6 +182,7 @@ public class LoginActivity extends AppCompatActivity{
                             SharedPreferences.Editor editor = getSharedPreferences(ARutil.getSharePreferencePath(),MODE_PRIVATE).edit();
                             editor.putString("uuid",uuid);
                             editor.putString("token",token);
+                            editor.putString("tel",phone);
                             editor.apply();
 
                             LoginActivity.this.runOnUiThread(new Runnable() {

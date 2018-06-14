@@ -478,6 +478,9 @@ public class MainActivity extends DrawerActivity{
                             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                             intent.putExtra("token", token);
                             intent.putExtra("uuid", uuid);
+                            SharedPreferences pref = getSharedPreferences(ARutil.getSharePreferencePath(),MODE_PRIVATE);
+                            String tel = pref.getString("tel",null);
+                            intent.putExtra("tel",tel);
                             startActivity(intent);
                         }
                         else{

@@ -139,6 +139,14 @@
         <activity
             android:name=".activity.SettingActivity"
             android:label="@string/title_activity_setting"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
+            android:name=".activity.RequestAuthCodeActivity"
+            android:label="验证本人手机号"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
+            android:name=".activity.ChangeTelAuthActivity"
+            android:label="更新手机号"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
     </application>
 
