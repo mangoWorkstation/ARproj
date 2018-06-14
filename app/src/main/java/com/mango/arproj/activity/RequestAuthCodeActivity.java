@@ -10,18 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mango.arproj.R;
-import com.mango.arproj.util.ARutil;
-import com.mango.arproj.util.JSONDecodeFormatter;
-import com.mango.arproj.util.JSONEncodeFormatter;
-
-import java.io.IOException;
-import java.util.HashMap;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class RequestAuthCodeActivity extends AppCompatActivity {
 
@@ -96,15 +84,18 @@ public class RequestAuthCodeActivity extends AppCompatActivity {
 //                        RequestAuthCodeActivity.this.runOnUiThread(new Runnable() {
 //                            @Override
 //                            public void run() {
-//                                Toast.makeText(RequestAuthCodeActivity.this, "验证码已经发送！", Toast.LENGTH_LONG).show();
-//                                if("changeTel".compareTo(destination)==0){
-//                                    Intent intent = new Intent(RequestAuthCodeActivity.this,ChangeTelAuthActivity.class);
-//                                    intent.putExtra("token",token);
-//                                    startActivity(intent);
-//                                }
-//                                if("resetPwd".compareTo(destination)==0){
-//                                    //TODO intent implemented here.
-//                                }
+//                                    Toast.makeText(RequestAuthCodeActivity.this, "验证码已经发送！", Toast.LENGTH_LONG).show();
+//                                    if("changeTel".compareTo(destination)==0){
+//                                        Intent intent = new Intent(RequestAuthCodeActivity.this,ChangeTelAuthActivity.class);
+//                                        intent.putExtra("token",token);
+//                                        startActivity(intent);
+//                                    }
+//                                    if("resetPwd".compareTo(destination)==0){
+//                                        //TODO intent implemented here.
+//                                        Intent intent = new Intent(RequestAuthCodeActivity.this,ResetPwdActivity.class);
+//                                        intent.putExtra("token",token);
+//                                        startActivity(intent);
+//                                    }
 //                            }
 //                        });
 //                    }
@@ -124,6 +115,9 @@ public class RequestAuthCodeActivity extends AppCompatActivity {
         }
         if("resetPwd".compareTo(destination)==0){
             //TODO intent implemented here.
+            Intent intent = new Intent(RequestAuthCodeActivity.this,ResetPwdActivity.class);
+            intent.putExtra("token",token);
+            startActivity(intent);
         }
     }
 

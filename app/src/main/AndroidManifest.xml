@@ -147,6 +147,10 @@
         <activity
             android:name=".activity.ChangeTelAuthActivity"
             android:label="更新手机号"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity
+            android:name=".activity.ResetPwdActivity"
+            android:label="重置密码"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
     </application>
 
